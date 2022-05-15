@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Shopping List</string>
+    <string name="cancel">Cancel</string>
+    <string name="approve">Approve</string>
+    <string name="amount">Amount</string>
+    <string name="name">Name</string>
+    <string name="addnewitem">Add New Shopping Item</string>
+    <string name="send">Send</string>
+    <string-array name="amount_types">
+        <item>KG</item>
+        <item>Number</item>
+    </string-array>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="webclientid" translatable="false">1009538021931-r5lgijt30kodcn0l6b79qlfcv9p926tp.apps.googleusercontent.com</string>
+</resources>

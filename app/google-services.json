@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1009538021931",
+    "project_id": "shopping-list-e1d12",
+    "storage_bucket": "shopping-list-e1d12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009538021931:android:c91f5768a78f6dcaba086e",
+        "android_client_info": {
+          "package_name": "com.cotyoragames.shoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009538021931-r5lgijt30kodcn0l6b79qlfcv9p926tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO76E5r8lvoD___NEFn5tQa8TsQaPkpTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009538021931-r5lgijt30kodcn0l6b79qlfcv9p926tp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
