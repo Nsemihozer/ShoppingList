@@ -3,12 +3,17 @@ package com.cotyoragames.shoppinglist.other
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListViewModel
 import kotlinx.android.synthetic.main.shopping_item.view.*
 import kotlinx.android.synthetic.main.shopping_satirlayout.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ShoppingListAdapter(
     var items: List<Shoppings>,
@@ -29,7 +34,17 @@ class ShoppingListAdapter(
         val current = items[position]
 
         holder.itemView.tarih.text= current.date
-        holder.itemView.adet.text="${itemViewModel.getShoppingCounts(current.shoppingsId!!)}"
+
+        CoroutineScope(Dispatchers.Main).launch {
+            var count=0
+            withContext(Dispatchers.IO)
+            {
+                count=itemViewModel.getShoppingCounts(current.shoppingsId!!)
+
+            }
+            holder.itemView.adet.text="${count}"
+        }
+
 
         holder.itemView.ivDelete2.setOnClickListener{
             itemViewModel.delete(current)

@@ -13,6 +13,7 @@ import com.cotyoragames.shoppinglist.other.ShoppingItemAdapter
 import com.cotyoragames.shoppinglist.other.ShoppingListAdapter
 import com.cotyoragames.shoppinglist.ui.shoppingitemlist.*
 import kotlinx.android.synthetic.main.activity_shopping_item.*
+import kotlinx.android.synthetic.main.activity_shopping_list.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -32,8 +33,8 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
 
 
         val adapter = ShoppingListAdapter(listOf(), itemViewModel)
-        rvShoppingItems.layoutManager = LinearLayoutManager(this)
-        rvShoppingItems.adapter = adapter
+        shoppinglist.layoutManager = LinearLayoutManager(this)
+        shoppinglist.adapter = adapter
 
         itemViewModel.getAllShoppingItems().observe(this, Observer {
             currItems=it
@@ -41,7 +42,7 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
             adapter.notifyDataSetChanged()
         })
 
-        fab.setOnClickListener {
+        fab2.setOnClickListener {
             val intent =Intent(this, ShoppingItemActivity::class.java).apply {
                 //putExtra(EXTRA_MESSAGE, message)
             }
