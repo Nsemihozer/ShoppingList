@@ -7,12 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.cotyoragames.shoppinglist.R
-import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingActivity
+import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_login.view.emailtxt
 import kotlinx.android.synthetic.main.fragment_login.view.passwordtxt
 import kotlinx.android.synthetic.main.fragment_login.view.registerbutton
-import kotlinx.android.synthetic.main.fragment_register.view.*
 
 
 class LoginFragment : Fragment() {
@@ -49,7 +46,7 @@ class LoginFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser!=null)
         {
-            val intent = Intent(activity, ShoppingActivity::class.java).apply {
+            val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
                 //putExtra(EXTRA_MESSAGE, message)
             }
             startActivity(intent)
@@ -97,7 +94,7 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("FireAuth", "createUserWithEmail:success")
                     val user = auth.currentUser
-                    val intent = Intent(activity, ShoppingActivity::class.java).apply {
+                    val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
                         //putExtra(EXTRA_MESSAGE, message)
                     }
                     startActivity(intent)
@@ -123,7 +120,7 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
-                    val intent = Intent(activity, ShoppingActivity::class.java).apply {
+                    val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
                         //putExtra(EXTRA_MESSAGE, message)
                     }
                     startActivity(intent)

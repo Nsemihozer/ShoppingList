@@ -12,19 +12,12 @@ data class ShoppingItem(
     var amount:Double,
     @ColumnInfo(name="amount_type")
     var amountType:String,
-
 )
 {
     @PrimaryKey(autoGenerate = true)
     var shoppingItemId:Int? = null
-
     @ColumnInfo(name="is_bought")
     var isBought:Boolean = false
-
-    @ColumnInfo(name="bought_amount")
-    var boughtAmount:Double= 0.0
-    @ColumnInfo(name="bought_price")
-    var boughtPrice:Double= 0.0
     @ColumnInfo(name="shoppingId")
     var shoppingId:Int=0
 }

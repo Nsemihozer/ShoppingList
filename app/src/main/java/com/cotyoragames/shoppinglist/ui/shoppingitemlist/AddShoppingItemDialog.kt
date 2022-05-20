@@ -1,4 +1,4 @@
-package com.cotyoragames.shoppinglist.ui.shoppinglist
+package com.cotyoragames.shoppinglist.ui.shoppingitemlist
 
 import android.content.Context
 import android.os.Bundle
@@ -24,20 +24,22 @@ class AddShoppingItemDialog(context: Context,var addDialogListener: AddDialogLis
                 Toast.makeText(context, "Please enter all information", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val item = ShoppingItem(name,amount.toDouble(),spinner.get(positition).toString())
+            spinner.get(0)
+            val item = ShoppingItem(name,amount.toDouble(),spinner.selectedItem.toString())
             addDialogListener.onAddButtonClicked(item)
             dismiss()
         }
         tvCancel.setOnClickListener {
             cancel()
         }
+        spinner
         spinner.onItemSelectedListener = this
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
-        positition=pos-1
+        positition=pos
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {

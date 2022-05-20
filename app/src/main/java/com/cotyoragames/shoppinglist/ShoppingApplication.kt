@@ -3,7 +3,8 @@ package com.cotyoragames.shoppinglist
 import android.app.Application
 import com.cotyoragames.shoppinglist.data.db.ShoppingDatabase
 import com.cotyoragames.shoppinglist.data.repositories.ShoppingRepository
-import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingViewModelFactory
+import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemViewModelFactory
+import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -23,7 +24,10 @@ class ShoppingApplication : Application(), KodeinAware{
                 ShoppingRepository(instance())
             }
             bind() from provider {
-                ShoppingViewModelFactory(instance())
+                ShoppingItemViewModelFactory(instance())
+            }
+            bind() from provider {
+                ShoppingListViewModelFactory(instance())
             }
         }
 }

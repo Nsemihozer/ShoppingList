@@ -10,7 +10,7 @@ import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 
 @Database(
     entities = [ShoppingItem::class,Shoppings::class],
-    version = 3,
+    version = 4,
 
 )
 abstract class ShoppingDatabase : RoomDatabase() {

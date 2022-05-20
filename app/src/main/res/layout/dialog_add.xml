@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
 
@@ -20,13 +20,13 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="@string/name"
         android:inputType="text"
         android:minHeight="48dp"
-        android:text="@string/name"
         app:layout_constraintEnd_toStartOf="@+id/etAmount"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -40,7 +40,7 @@
         android:hint="@string/amount"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@id/spinner"
+        app:layout_constraintStart_toEndOf="@id/etName"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
@@ -66,12 +66,18 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:dropDownWidth="0dp"
         android:entries="@array/amount_types"
+        android:gravity="center"
         android:minHeight="48dp"
         android:popupElevation="0dp"
+        android:scrollbarSize="0dp"
+        android:spinnerMode="dialog"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etAmount"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
