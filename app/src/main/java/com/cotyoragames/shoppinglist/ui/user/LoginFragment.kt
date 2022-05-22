@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
+import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -46,7 +47,7 @@ class LoginFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser!=null)
         {
-            val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
+            val intent = Intent(activity, ShoppingListActivity::class.java).apply {
                 //putExtra(EXTRA_MESSAGE, message)
             }
             startActivity(intent)
@@ -94,7 +95,7 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("FireAuth", "createUserWithEmail:success")
                     val user = auth.currentUser
-                    val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
+                    val intent = Intent(activity, ShoppingListActivity::class.java).apply {
                         //putExtra(EXTRA_MESSAGE, message)
                     }
                     startActivity(intent)
@@ -120,7 +121,7 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
-                    val intent = Intent(activity, ShoppingItemActivity::class.java).apply {
+                    val intent = Intent(activity, ShoppingListActivity::class.java).apply {
                         //putExtra(EXTRA_MESSAGE, message)
                     }
                     startActivity(intent)

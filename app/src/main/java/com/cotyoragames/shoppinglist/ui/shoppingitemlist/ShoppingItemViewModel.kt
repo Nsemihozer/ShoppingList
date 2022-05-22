@@ -20,7 +20,7 @@ class ShoppingItemViewModel (
     fun delete(item:ShoppingItem)= CoroutineScope(Dispatchers.Main).launch {
         repository.delete(item)
     }
-    fun getAllShoppingItems()= repository.getAllShoppingItems()
+    fun getShoppingItems(shoppingId:Int)= repository.getShoppingItems(shoppingId)
 
     fun getNotListedShoppingItems()= repository.getNotListedShoppingItems()
 

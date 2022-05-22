@@ -7,17 +7,26 @@ import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 class ShoppingRepository(
     private val db:ShoppingDatabase
 ) {
+
+    //-----------------Shopping Item Actions-------------//
     suspend fun upsert(item:ShoppingItem)=db.getShoppingDao().upsert(item)
 
     suspend fun delete(item: ShoppingItem)=db.getShoppingDao().delete(item)
 
-    suspend fun deleteShopping(item: Shoppings)=db.getShoppingDao().deleteShopping(item)
-
     suspend fun deleteAll()=db.getShoppingDao().deleteAll()
+
+    suspend fun deleteShoppingItems(shoppingId:Int)=db.getShoppingDao().deleteShoppingItems(shoppingId)
 
     fun getAllShoppingItems()=db.getShoppingDao().getAllShoppingItems()
 
+    fun getShoppingItems(shoppingId: Int)=db.getShoppingDao().getShoppingItems(shoppingId)
+
     fun getNotListedShoppingItems()=db.getShoppingDao().getNotListedShoppingItems()
+
+    //----------------------------------------------------//
+    //-----------------Shopping Item Actions-------------//
+
+    suspend fun deleteShopping(item: Shoppings)=db.getShoppingDao().deleteShopping(item)
 
     suspend fun insertShopping(item:Shoppings)=db.getShoppingDao().upsertShopping(item)
 
@@ -26,4 +35,5 @@ class ShoppingRepository(
     fun getLastShopping()=db.getShoppingDao().getLastShopping()
 
     fun getShoppingCounts(itemID:Int)=db.getShoppingDao().getShoppingCounts(itemID)
+    //----------------------------------------------------//
 }

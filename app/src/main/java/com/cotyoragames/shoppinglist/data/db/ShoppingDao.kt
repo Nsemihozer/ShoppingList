@@ -7,6 +7,9 @@ import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 
 @Dao
 interface ShoppingDao {
+
+    //-----------------Shopping Item Actions-------------//
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(item: ShoppingItem)
 
@@ -21,7 +24,11 @@ interface ShoppingDao {
 
     @Query("DELETE FROM shopping_items")
     suspend fun deleteAll()
+    @Query("DELETE FROM shopping_items where shoppingId=:shoppingId")
+    suspend fun deleteShoppingItems(shoppingId: Int)
 
+    //----------------------------------------------------//
+    //-----------------Shopping Item Actions-------------//
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertShopping(item: Shoppings)
 
@@ -43,6 +50,6 @@ interface ShoppingDao {
     @Query("select Count(shoppingItemId) from shopping_items where shoppingId=:shoppingId")
     fun getShoppingCounts(shoppingId: Int): Int
 
-
+    //----------------------------------------------------//
 
 }

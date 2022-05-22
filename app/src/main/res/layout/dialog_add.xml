@@ -20,14 +20,15 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="150dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="text"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@+id/etAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -35,13 +36,15 @@
         android:id="@+id/etAmount"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/amount"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@id/etName"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <TextView
         android:id="@+id/tvCancel"
@@ -69,6 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
         android:dropDownWidth="0dp"
         android:entries="@array/amount_types"
         android:gravity="center"
@@ -78,6 +82,5 @@
         android:spinnerMode="dialog"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/etAmount"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

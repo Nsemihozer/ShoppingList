@@ -11,15 +11,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvAmount"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginEnd="16dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@id/tvAmountType"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAmountType"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,10 +42,10 @@
         android:id="@+id/ivDelete"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_delete"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <ImageView
@@ -39,8 +53,9 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_minus"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivDelete"
         app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
 
     <ImageView

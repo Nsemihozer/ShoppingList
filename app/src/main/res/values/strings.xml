@@ -8,7 +8,7 @@
     <string name="send">Send</string>
     <string-array name="amount_types">
         <item>KG</item>
-        <item>Number</item>
+        <item>Cnt</item>
     </string-array>
     <string name="register">Register</string>
     <string name="login">Login</string>

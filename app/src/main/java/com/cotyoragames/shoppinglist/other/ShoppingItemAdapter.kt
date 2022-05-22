@@ -27,7 +27,7 @@ class ShoppingItemAdapter(
 
         holder.itemView.tvAmount.text="${current.amount}"
         holder.itemView.tvName.text=current.name
-
+        holder.itemView.tvAmountType.text= current.amountType
         holder.itemView.ivDelete.setOnClickListener{
             itemViewModel.delete(current)
         }
