@@ -22,7 +22,7 @@ class ShoppingItemViewModel (
     }
     fun getShoppingItems(shoppingId:Int)= repository.getShoppingItems(shoppingId)
 
-    fun getNotListedShoppingItems()= repository.getNotListedShoppingItems()
+
 
     fun clear()=CoroutineScope(Dispatchers.Main).launch {
         repository.deleteAll()
@@ -36,8 +36,7 @@ class ShoppingItemViewModel (
     }
 
     fun send(item:ShoppingItem)= CoroutineScope(Dispatchers.Main).launch {
-
            upsert(item)
     }
-    fun getLastShopping()=repository.getLastShopping()
+    fun getShopping(shoppingId: Int)=repository.getShopping(shoppingId)
 }

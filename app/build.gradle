@@ -74,6 +74,7 @@ dependencies {
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     // Declare the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies

@@ -47,6 +47,9 @@ interface ShoppingDao {
     @Query("select * from shoppings order by shoppingsId desc limit 1")
     fun getLastShopping(): Shoppings
 
+    @Query("select * from shoppings where shoppingsId=:shoppingId")
+    fun getShopping(shoppingId: Int): Shoppings
+
     @Query("select Count(shoppingItemId) from shopping_items where shoppingId=:shoppingId")
     fun getShoppingCounts(shoppingId: Int): Int
 

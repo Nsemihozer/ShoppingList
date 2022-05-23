@@ -34,6 +34,8 @@ class ShoppingRepository(
 
     fun getLastShopping()=db.getShoppingDao().getLastShopping()
 
+    fun getShopping(shoppingId: Int) = db.getShoppingDao().getShopping(shoppingId)
+
     fun getShoppingCounts(itemID:Int)=db.getShoppingDao().getShoppingCounts(itemID)
     //----------------------------------------------------//
 }
