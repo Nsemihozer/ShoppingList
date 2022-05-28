@@ -15,4 +15,5 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="webclientid" translatable="false">1009538021931-r5lgijt30kodcn0l6b79qlfcv9p926tp.apps.googleusercontent.com</string>
+    <string name="friends">Friends</string>
 </resources>

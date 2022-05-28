@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Shopping List</string>
+    <string name="app_name">Alışveriş Listesi</string>
     <string name="cancel">İptal</string>
     <string name="approve">Onayla</string>
     <string name="amount">Miktar</string>
@@ -15,4 +15,5 @@
         <item>KG</item>
         <item>Adt</item>
     </string-array>
+    <string name="friends">Arkadaşlar</string>
 </resources>

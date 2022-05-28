@@ -3,17 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/drawable/selector.xml" value="0.232" />
+        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_friends.xml" value="0.1851218469431381" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_login.xml" value="0.3138586956521739" />
-        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.3138586956521739" />
+        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_register.xml" value="0.3138586956521739" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_shopping.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_shopping_item.xml" value="0.3087719298245614" />
-        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_shopping_list.xml" value="0.3087719298245614" />
+        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/activity_shopping_list.xml" value="0.2" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/dialog_add.xml" value="0.3138586956521739" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/fragment_register.xml" value="0.3138586956521739" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/shopping_item.xml" value="0.25" />
         <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/layout/shopping_satirlayout.xml" value="0.3087719298245614" />
+        <entry key="..\:/Users/Semih/Desktop/blog/ShoppingList/app/src/main/res/menu/bottom_navigation.xml" value="0.1899122807017544" />
       </map>
     </option>
   </component>
