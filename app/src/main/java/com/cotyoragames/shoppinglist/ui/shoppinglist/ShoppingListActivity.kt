@@ -10,7 +10,7 @@ import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.other.ShoppingListAdapter
 import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
-import com.cotyoragames.shoppinglist.ui.user.FriendsActivity
+import com.cotyoragames.shoppinglist.ui.user.friends.FriendsActivity
 import kotlinx.android.synthetic.main.activity_shopping_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

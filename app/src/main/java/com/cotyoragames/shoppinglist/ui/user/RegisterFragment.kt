@@ -11,19 +11,18 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cotyoragames.shoppinglist.R
+import com.cotyoragames.shoppinglist.data.db.entities.Friends
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        auth = Firebase.auth
-    }
+    private val auth: FirebaseAuth = Firebase.auth
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +50,14 @@ class RegisterFragment : Fragment() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FireAuth", "createUserWithEmail:success")
-                            val user = auth.currentUser
+                            val user = task.result.user
+                            val docData = hashMapOf(
+                                "uid" to user!!.uid,
+                                "friends" to listOf<Friends>(),
+                            )
+                            db.collection("users").add(docData).addOnSuccessListener {
+
+                            }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }
 
                         } else {
                             // If sign in fails, display a message to the user.

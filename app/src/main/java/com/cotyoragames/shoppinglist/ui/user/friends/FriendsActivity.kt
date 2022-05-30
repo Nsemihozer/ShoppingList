@@ -1,4 +1,4 @@
-package com.cotyoragames.shoppinglist.ui.user
+package com.cotyoragames.shoppinglist.ui.user.friends
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
