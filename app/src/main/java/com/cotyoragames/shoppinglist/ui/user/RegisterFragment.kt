@@ -56,6 +56,13 @@ class RegisterFragment : Fragment() {
                                 "friends" to listOf<Friends>(),
                             )
                             db.collection("users").add(docData).addOnSuccessListener {
+                                val manager = requireActivity().supportFragmentManager
+                                val transaction = manager.beginTransaction()
+                                    .setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_left_to_right,R.anim.enter_right_to_left,R.anim.exit_right_to_left)
+                                    .replace(R.id.frame, LoginFragment())
+                                    .disallowAddToBackStack()
+                                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                    .commit()
 
                             }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }
 
