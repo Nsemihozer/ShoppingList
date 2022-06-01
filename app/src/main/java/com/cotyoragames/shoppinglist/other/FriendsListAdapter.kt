@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cotyoragames.shoppinglist.R
-import com.cotyoragames.shoppinglist.data.db.entities.Friends
+import com.cotyoragames.shoppinglist.data.db.entities.Users
 import kotlinx.android.synthetic.main.friend_item.view.*
 
-class FriendsListAdapter(var items:List<Friends>,var context: Context) :
+class FriendsListAdapter(var items:List<Users>, var context: Context) :
     RecyclerView.Adapter<FriendsListAdapter.FriendsViewHolder>() {
     inner class FriendsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 

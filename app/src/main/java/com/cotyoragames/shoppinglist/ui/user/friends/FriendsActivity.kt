@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.other.FriendsListAdapter
-import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemViewModel
 import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
 import kotlinx.android.synthetic.main.activity_friends.*
 
@@ -21,7 +20,7 @@ class FriendsActivity : AppCompatActivity() {
 
         val adapter = FriendsListAdapter(listOf(),this)
 
-        itemViewModel.friends.observe(this, Observer{
+        itemViewModel.users.observe(this, Observer{
             adapter.items=it
             adapter.notifyDataSetChanged()
         })

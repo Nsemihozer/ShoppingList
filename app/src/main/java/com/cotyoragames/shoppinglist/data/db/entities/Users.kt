@@ -1,6 +1,6 @@
 package com.cotyoragames.shoppinglist.data.db.entities
 
-data class Friends(
+data class Users(
     var useruid : String,
     var displayName: String,
     var email:String,

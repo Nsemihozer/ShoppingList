@@ -8,15 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cotyoragames.shoppinglist.R
-import com.cotyoragames.shoppinglist.data.db.entities.Friends
+import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 class RegisterFragment : Fragment() {
@@ -53,7 +51,7 @@ class RegisterFragment : Fragment() {
                             val user = task.result.user
                             val docData = hashMapOf(
                                 "uid" to user!!.uid,
-                                "friends" to listOf<Friends>(),
+                                "friends" to listOf<Users>(),
                             )
                             db.collection("users").add(docData).addOnSuccessListener {
                                 val manager = requireActivity().supportFragmentManager

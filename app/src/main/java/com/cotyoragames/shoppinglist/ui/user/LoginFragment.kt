@@ -8,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.cotyoragames.shoppinglist.R
-import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
+import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -19,6 +20,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_login.view.emailtxt
@@ -30,6 +32,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    val db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -120,6 +123,29 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
+                    if (task.result.additionalUserInfo?.isNewUser == true)
+                    {
+                        val user = task.result.user
+                        val newUser = Users(user!!.uid,
+                            if(user.displayName != null)  user.displayName!! else  "" ,if(user.email != null) user.email!! else "" ,if(user.photoUrl != null) user.photoUrl.toString() else "")
+                        val docData = hashMapOf(
+                            "uid" to newUser.useruid,
+                            "displayName" to newUser.displayName,
+                            "email" to newUser.email,
+                            "photoUrl" to newUser.photoUrl,
+                            "friends" to listOf<Users>(),
+                        )
+                        db.collection("users").add(docData).addOnSuccessListener {
+                            val manager = requireActivity().supportFragmentManager
+                            val transaction = manager.beginTransaction()
+                                .setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_left_to_right,R.anim.enter_right_to_left,R.anim.exit_right_to_left)
+                                .replace(R.id.frame, LoginFragment())
+                                .disallowAddToBackStack()
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit()
+
+                        }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }
+                    }
                     val user = auth.currentUser
                     val intent = Intent(activity, ShoppingListActivity::class.java).apply {
                         //putExtra(EXTRA_MESSAGE, message)
