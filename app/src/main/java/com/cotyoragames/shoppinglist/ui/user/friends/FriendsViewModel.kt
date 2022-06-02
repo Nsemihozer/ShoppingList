@@ -25,8 +25,7 @@ class FriendsViewModel : ViewModel() {
         query.get().addOnSuccessListener { docs->
             val doc = docs.documents[0]
              _friends.postValue(doc["friends"] as List<Users>)
-        }
-            .addOnFailureListener { ex->
+        }.addOnFailureListener { ex->
 
             }
     }

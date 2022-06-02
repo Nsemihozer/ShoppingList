@@ -54,6 +54,11 @@ class FriendsActivity : AppCompatActivity() {
             finishAffinity()
             true
         }
+        R.id.action_addfriend->{
+            startActivity(Intent(applicationContext, AddFriendsActivity::class.java))
+            finishAffinity()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
 
     }

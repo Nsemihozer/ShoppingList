@@ -27,6 +27,7 @@ import org.kodein.di.generic.instance
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class ShoppingListActivity : AppCompatActivity() , KodeinAware {
 
     override val kodein by kodein()
@@ -85,6 +86,8 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
+        val item = menu.findItem(R.id.action_addfriend)
+        item.isVisible=false
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

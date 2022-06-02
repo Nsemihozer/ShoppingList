@@ -7,4 +7,9 @@
         android:icon="@android:drawable/ic_lock_power_off"
         android:title="@string/logout"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_addfriend"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Add Friend"
+        app:showAsAction="always" />
 </menu>
