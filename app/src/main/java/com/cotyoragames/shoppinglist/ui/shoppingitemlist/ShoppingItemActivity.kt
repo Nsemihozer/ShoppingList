@@ -58,9 +58,7 @@ class ShoppingItemActivity : AppCompatActivity() , KodeinAware   {
                 }
             }).show()
         }
-        fablogout.setOnClickListener {
-            Firebase.auth.signOut()
-        }
+
 
         btnsend.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {

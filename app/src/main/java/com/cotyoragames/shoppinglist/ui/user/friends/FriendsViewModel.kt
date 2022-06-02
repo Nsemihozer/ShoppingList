@@ -17,9 +17,9 @@ class FriendsViewModel : ViewModel() {
         get() = _friends
 
     init {
-
+        getFriends()
     }
-    fun getFriends(){
+    private fun getFriends(){
         val query = db.collection("users").whereEqualTo("uid",auth.currentUser!!.uid)
 
         query.get().addOnSuccessListener { docs->

@@ -49,13 +49,18 @@ class RegisterFragment : Fragment() {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FireAuth", "createUserWithEmail:success")
                             val user = task.result.user
+                            val newUser = Users(user!!.uid,
+                                if(user.displayName != null)  user.displayName!! else  "" ,if(user.email != null) user.email!! else "" ,if(user.photoUrl != null) user.photoUrl.toString() else "")
                             val docData = hashMapOf(
-                                "uid" to user!!.uid,
+                                "uid" to newUser.useruid,
+                                "displayName" to newUser.displayName,
+                                "email" to newUser.email,
+                                "photoUrl" to newUser.photoUrl,
                                 "friends" to listOf<Users>(),
                             )
                             db.collection("users").add(docData).addOnSuccessListener {
                                 val manager = requireActivity().supportFragmentManager
-                                val transaction = manager.beginTransaction()
+                                manager.beginTransaction()
                                     .setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_left_to_right,R.anim.enter_right_to_left,R.anim.exit_right_to_left)
                                     .replace(R.id.frame, LoginFragment())
                                     .disallowAddToBackStack()

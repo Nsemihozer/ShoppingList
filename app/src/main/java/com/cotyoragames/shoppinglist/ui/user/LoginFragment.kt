@@ -136,21 +136,15 @@ class LoginFragment : Fragment() {
                             "friends" to listOf<Users>(),
                         )
                         db.collection("users").add(docData).addOnSuccessListener {
-                            val manager = requireActivity().supportFragmentManager
-                            val transaction = manager.beginTransaction()
-                                .setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_left_to_right,R.anim.enter_right_to_left,R.anim.exit_right_to_left)
-                                .replace(R.id.frame, LoginFragment())
-                                .disallowAddToBackStack()
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                .commit()
-
+                            val intent = Intent(activity, ShoppingListActivity::class.java)
+                            startActivity(intent)
                         }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }
                     }
-                    val user = auth.currentUser
-                    val intent = Intent(activity, ShoppingListActivity::class.java).apply {
-                        //putExtra(EXTRA_MESSAGE, message)
+                    else
+                    {
+                        val intent = Intent(activity, ShoppingListActivity::class.java)
+                        startActivity(intent)
                     }
-                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("FireAuth", "createUserWithEmail:failure", task.exception)

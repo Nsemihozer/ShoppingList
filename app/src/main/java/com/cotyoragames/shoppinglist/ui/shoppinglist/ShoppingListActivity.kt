@@ -2,6 +2,8 @@ package com.cotyoragames.shoppinglist.ui.shoppinglist
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +12,10 @@ import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.other.ShoppingListAdapter
 import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
+import com.cotyoragames.shoppinglist.ui.user.LoginActivity
 import com.cotyoragames.shoppinglist.ui.user.friends.FriendsActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_shopping_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,8 +61,6 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
                 }
                 else -> true
             }
-
-
         }
 
         fab2.setOnClickListener {
@@ -79,5 +82,24 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
 
         }
 
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.actionbar_menu, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.logout_item -> {
+            Firebase.auth.signOut()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+            finishAffinity()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
     }
 }

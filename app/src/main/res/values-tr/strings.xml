@@ -16,4 +16,5 @@
         <item>Adt</item>
     </string-array>
     <string name="friends">Arkadaşlar</string>
+    <string name="logout">Çıkış</string>
 </resources>
