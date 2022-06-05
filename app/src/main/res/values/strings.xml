@@ -17,4 +17,5 @@
     <string name="webclientid" translatable="false">1009538021931-r5lgijt30kodcn0l6b79qlfcv9p926tp.apps.googleusercontent.com</string>
     <string name="friends">Friends</string>
     <string name="logout">Logout</string>
+    <string name="username">Username</string>
 </resources>

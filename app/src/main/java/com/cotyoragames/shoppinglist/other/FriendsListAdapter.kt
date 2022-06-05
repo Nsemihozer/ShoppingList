@@ -30,4 +30,6 @@ class FriendsListAdapter(var items:List<Users>, var context: Context) :
     override fun getItemCount(): Int {
         return items.size
     }
+
+
 }
