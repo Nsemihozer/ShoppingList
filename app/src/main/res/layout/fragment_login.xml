@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/passwordtxt"
+        android:id="@+id/registernametxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -67,7 +67,7 @@
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/googlelogin"
-        app:layout_constraintTop_toBottomOf="@+id/passwordtxt" />
+        app:layout_constraintTop_toBottomOf="@+id/registernametxt" />
 
     <ImageView
         android:id="@+id/googlelogin"
@@ -77,5 +77,5 @@
         app:layout_constraintEnd_toStartOf="@+id/loginbutton"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/passwordtxt" />
+        app:layout_constraintTop_toBottomOf="@+id/registernametxt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

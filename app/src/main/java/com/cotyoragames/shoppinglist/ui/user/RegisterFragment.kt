@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 class RegisterFragment : Fragment() {
@@ -41,7 +42,7 @@ class RegisterFragment : Fragment() {
         }
         view.registerbutton.setOnClickListener {
             val email= view.emailtxt.text.toString()
-            val password=view.passwordtxt.text.toString()
+            val password=view.registernametxt.text.toString()
             activity?.let { it1 ->
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(it1) { task ->
@@ -50,7 +51,7 @@ class RegisterFragment : Fragment() {
                             Log.d("FireAuth", "createUserWithEmail:success")
                             val user = task.result.user
                             val newUser = Users(user!!.uid,
-                                if(user.displayName != null)  user.displayName!! else  "" ,if(user.email != null) user.email!! else "" ,if(user.photoUrl != null) user.photoUrl.toString() else "")
+                                registernametxt.text.toString() ,if(user.email != null) user.email!! else "" ,if(user.photoUrl != null) user.photoUrl.toString() else "")
                             val docData = hashMapOf(
                                 "uid" to newUser.useruid,
                                 "displayName" to newUser.displayName,

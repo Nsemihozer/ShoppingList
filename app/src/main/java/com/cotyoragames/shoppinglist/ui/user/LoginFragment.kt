@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Users
@@ -24,7 +23,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_login.view.emailtxt
-import kotlinx.android.synthetic.main.fragment_login.view.passwordtxt
+import kotlinx.android.synthetic.main.fragment_login.view.registernametxt
 import kotlinx.android.synthetic.main.fragment_login.view.registerbutton
 
 
@@ -92,7 +91,7 @@ class LoginFragment : Fragment() {
         }
         view.loginbutton.setOnClickListener {
             val email= view.emailtxt.text.toString()
-            val password=view.passwordtxt.text.toString()
+            val password=view.registernametxt.text.toString()
             auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information

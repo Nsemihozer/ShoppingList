@@ -22,8 +22,8 @@ class AddFriendsActivity : AppCompatActivity() {
 
 
         viewmodel.users.observe(this, Observer {
-            for (user in it)
-                userAdapter.add(user)
+            userAdapter.allUsers=it
+            userAdapter.notifyDataSetChanged()
         })
 
         usernameac.setAdapter(userAdapter)

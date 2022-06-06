@@ -16,8 +16,8 @@ import java.util.*
 class AutoCompleteFriendAdapter(
     private val mContext: Context,
     private val resourceId:Int , userList: List<Users>): ArrayAdapter<Users>(mContext,resourceId , userList){
-    private val user: MutableList<Users> = ArrayList(userList)
-    private var allUsers: List<Users> = ArrayList(userList)
+    val user: MutableList<Users> = ArrayList(userList)
+    var allUsers: List<Users> = ArrayList(userList)
 
 
     override fun getCount(): Int {
@@ -27,7 +27,7 @@ class AutoCompleteFriendAdapter(
         return user[position]
     }
     override fun getItemId(position: Int): Long {
-        return user[position].useruid.toLong()
+        return position.toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {

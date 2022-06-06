@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cotyoragames.shoppinglist.data.db.entities.Users
+import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -22,7 +23,9 @@ class AddFriendsViewModel : ViewModel() {
         db.collection("users")
         .get().addOnSuccessListener { docs->
                 for (document in docs){
-                    userList.add(document as Users)
+                    val newUser = Users(document["uid"] as String, document["displayName"] as String  ,document["email"] as String ,
+                        document["photoUrl"] as String)
+                    userList.add(newUser)
                 }
                 _users.postValue(userList)
         }.addOnFailureListener { ex->
