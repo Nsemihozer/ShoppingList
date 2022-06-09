@@ -26,6 +26,8 @@ class AddFriendsActivity : AppCompatActivity() {
             userAdapter.notifyDataSetChanged()
         })
 
+
+
         usernameac.setAdapter(userAdapter)
         usernameac.setOnItemClickListener { adapterView, view, i, l ->
             val user = userAdapter.getItem(i) as Users?
