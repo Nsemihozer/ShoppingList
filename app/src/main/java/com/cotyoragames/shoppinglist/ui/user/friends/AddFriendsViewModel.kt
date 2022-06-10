@@ -20,9 +20,29 @@ class AddFriendsViewModel : ViewModel() {
     private val _requests = MutableLiveData<List<FriendRequest>>()
     val requests : LiveData<List<FriendRequest>>
         get() = _requests
+
+    private val _status = MutableLiveData<Int>()
+    val status : LiveData<Int>
+    get() = _status
     init {
+        getRequests()
         getFriends()
+        _status.postValue(0) //0 clear 1 success 2 fail
     }
+
+    fun sendRequest(userId:String) {
+        val docData = hashMapOf(
+            "senderId" to userId,
+            "receiverId" to auth.currentUser!!.uid,
+            "status" to 0 // waiting
+        )
+        db.collection("friendrequest").add(docData).addOnSuccessListener {
+            _status.postValue(1)
+        }.addOnFailureListener {
+            _status.postValue(2)
+        }
+    }
+
     private fun getFriends(){
         val userList:MutableList<Users> = mutableListOf()
         db.collection("users")
@@ -40,8 +60,13 @@ class AddFriendsViewModel : ViewModel() {
 
     private fun getRequests()
     {
+        val requestList:MutableList<FriendRequest> = mutableListOf()
         db.collection("friendrequest").whereEqualTo("senderId",auth.currentUser!!.uid).get().addOnSuccessListener { docs->
-            
+            for (document in docs){
+                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,document["status"] as Int)
+                requestList.add(newRequest)
+            }
+            _requests.postValue(requestList)
         }
     }
 }
