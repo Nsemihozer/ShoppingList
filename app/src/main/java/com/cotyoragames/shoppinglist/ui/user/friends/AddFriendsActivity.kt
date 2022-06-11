@@ -2,9 +2,11 @@ package com.cotyoragames.shoppinglist.ui.user.friends
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.cotyoragames.shoppinglist.other.AutoCompleteFriendAdapter
@@ -43,19 +45,31 @@ class AddFriendsActivity : AppCompatActivity() {
             }
             else
             {
+                viewmodel.setStatus(1)
                 viewmodel.sendRequest(useridtext.text.toString())
             }
 
         }
 
         viewmodel.status.observe(this, Observer {
-            if (it==1)
-            {
-                Toast.makeText(this, "Send request", Toast.LENGTH_SHORT).show()
-            }
-            else if (it ==2)
-            {
-                Toast.makeText(this, "Failed to send request", Toast.LENGTH_SHORT).show()
+            when (it) {
+                2 -> {
+                    Toast.makeText(this, "Send request", Toast.LENGTH_SHORT).show()
+                    friendrequestbtn.visibility= View.VISIBLE
+                    viewmodel.setStatus(0)
+                }
+                3 -> {
+                    Toast.makeText(this, "Failed to send request", Toast.LENGTH_SHORT).show()
+                    friendrequestbtn.visibility= View.VISIBLE
+                    viewmodel.setStatus(0)
+                }
+                1 -> {
+                    friendrequestbtn.visibility= View.GONE
+                    friendrequestpb.visibility=View.VISIBLE
+                }
+                0->{
+                    friendrequestpb.visibility=View.GONE
+                }
             }
         })
 
@@ -63,7 +77,10 @@ class AddFriendsActivity : AppCompatActivity() {
         usernameac.setOnItemClickListener { adapterView, view, i, l ->
             val user = userAdapter.getItem(i) as Users?
             usernameac.setText(user?.displayName)
+            useridtext.text=user?.useruid
         }
+        friendrequestrw.layoutManager=LinearLayoutManager(this)
+        friendrequestrw.adapter=requestAdapter
 
     }
 }

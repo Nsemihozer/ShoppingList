@@ -1,6 +1,7 @@
 package com.cotyoragames.shoppinglist.ui.user.friends
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.cotyoragames.shoppinglist.data.db.entities.FriendRequest
@@ -17,17 +18,42 @@ class AddFriendsViewModel : ViewModel() {
     val users : LiveData<List<Users>>
         get() = _users
 
-    private val _requests = MutableLiveData<List<FriendRequest>>()
+    private val _sendedRequests = MutableLiveData<List<FriendRequest>>()
+    private val _receivedRequests = MutableLiveData<List<FriendRequest>>()
     val requests : LiveData<List<FriendRequest>>
-        get() = _requests
+        get() = _sendedRequests.combineWith(_receivedRequests) {sendedRequests,receivedRequests->
+            val list: MutableList<FriendRequest> = ArrayList()
+            if (sendedRequests != null) {
+                list.addAll(sendedRequests)
+            }
+            if (receivedRequests != null) {
+                list.addAll(receivedRequests)
+            }
+            return@combineWith list
+        }
 
+
+    fun <T, K, R> LiveData<T>.combineWith(
+        liveData: LiveData<K>,
+        block: (T?, K?) -> R
+    ): LiveData<R> {
+        val result = MediatorLiveData<R>()
+        result.addSource(this) {
+            result.value = block(this.value, liveData.value)
+        }
+        result.addSource(liveData) {
+            result.value = block(this.value, liveData.value)
+        }
+        return result
+    }
     private val _status = MutableLiveData<Int>()
     val status : LiveData<Int>
     get() = _status
     init {
-        getRequests()
         getFriends()
-        _status.postValue(0) //0 clear 1 success 2 fail
+        getSendedRequests()
+        getReceivedRequests()
+        _status.postValue(0) //0 clear 1 sending 2 success 3 fail
     }
 
     fun sendRequest(userId:String) {
@@ -37,10 +63,15 @@ class AddFriendsViewModel : ViewModel() {
             "status" to 0 // waiting
         )
         db.collection("friendrequest").add(docData).addOnSuccessListener {
-            _status.postValue(1)
+           setStatus(2)
         }.addOnFailureListener {
-            _status.postValue(2)
+            setStatus(3)
         }
+    }
+
+    fun setStatus(status:Int)
+    {
+        _status.postValue(status)
     }
 
     private fun getFriends(){
@@ -58,15 +89,30 @@ class AddFriendsViewModel : ViewModel() {
         }
     }
 
-    private fun getRequests()
+    private fun getSendedRequests()
     {
-        val requestList:MutableList<FriendRequest> = mutableListOf()
+        val sendedrequestList:MutableList<FriendRequest> = mutableListOf()
         db.collection("friendrequest").whereEqualTo("senderId",auth.currentUser!!.uid).get().addOnSuccessListener { docs->
             for (document in docs){
-                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,document["status"] as Int)
-                requestList.add(newRequest)
+                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,
+                    (document["status"] as Long).toInt()
+                )
+                sendedrequestList.add(newRequest)
             }
-            _requests.postValue(requestList)
+            _sendedRequests.postValue(sendedrequestList)
+        }
+    }
+    private fun getReceivedRequests()
+    {
+        val receivedrequestList:MutableList<FriendRequest> = mutableListOf()
+        db.collection("friendrequest").whereEqualTo("receiverId",auth.currentUser!!.uid).get().addOnSuccessListener { docs->
+            for (document in docs){
+                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,
+                    (document["status"] as Long).toInt()
+                )
+                receivedrequestList.add(newRequest)
+            }
+            _receivedRequests.postValue(receivedrequestList)
         }
     }
 }
