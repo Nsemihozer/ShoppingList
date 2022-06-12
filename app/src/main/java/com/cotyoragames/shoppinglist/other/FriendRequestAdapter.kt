@@ -33,6 +33,7 @@ class FriendRequestAdapter(var itemList : List<FriendRequest>,var mContext : Con
             displayName=current.receiverId
             view.requestacceptbtn.visibility=View.INVISIBLE
             view.requestrejectbtn.visibility=View.INVISIBLE
+            view.requestundobtn.visibility=View.VISIBLE
         }
         view.requestDisplaytxt.text = displayName
 

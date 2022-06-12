@@ -58,11 +58,12 @@ class AddFriendsViewModel : ViewModel() {
 
     fun sendRequest(userId:String) {
         val docData = hashMapOf(
-            "senderId" to userId,
-            "receiverId" to auth.currentUser!!.uid,
+            "senderId" to auth.currentUser!!.uid,
+            "receiverId" to userId,
             "status" to 0 // waiting
         )
         db.collection("friendrequest").add(docData).addOnSuccessListener {
+            getSendedRequests()
            setStatus(2)
         }.addOnFailureListener {
             setStatus(3)

@@ -1,5 +1,6 @@
 package com.cotyoragames.shoppinglist.ui.user.friends
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -82,5 +83,11 @@ class AddFriendsActivity : AppCompatActivity() {
         friendrequestrw.layoutManager=LinearLayoutManager(this)
         friendrequestrw.adapter=requestAdapter
 
+    }
+
+    override fun onBackPressed() {
+        intent= Intent(this,FriendsActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }
