@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/requestDisplaytxt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,34 +20,40 @@
         android:id="@+id/requestundobtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
         android:background="#00FFFFFF"
+        android:contentDescription="@string/addnewitem"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/requestrejectbtn"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_undo" />
+        android:src="@drawable/ic_undo" />
 
     <ImageButton
         android:id="@+id/requestacceptbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="16dp"
         android:background="#00FFFFFF"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:src="@drawable/ic_accept"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/requestrejectbtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="#099A17"
-        tools:src="@drawable/ic_accept" />
+        app:tint="#099A17" />
 
     <ImageButton
         android:id="@+id/requestrejectbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:background="#00FFFFFF"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/requestacceptbtn"
+        app:layout_constraintStart_toEndOf="@+id/requestundobtn"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_minus"
         app:tint="#FF0000" />
@@ -57,5 +63,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
