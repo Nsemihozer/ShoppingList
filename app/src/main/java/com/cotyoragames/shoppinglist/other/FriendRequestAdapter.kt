@@ -1,6 +1,7 @@
 package com.cotyoragames.shoppinglist.other
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.FriendRequest
+import com.cotyoragames.shoppinglist.ui.user.friends.AddFriendsViewModel
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.friend_request_item.view.*
 
-class FriendRequestAdapter(var itemList : List<FriendRequest>,var mContext : Context,var userId:String) : RecyclerView.Adapter<FriendRequestAdapter.FrienRequestViewHolder>() {
+class FriendRequestAdapter(var itemList : List<FriendRequest>,var mContext : Context,var userId:String, private val itemViewModel:AddFriendsViewModel) : RecyclerView.Adapter<FriendRequestAdapter.FrienRequestViewHolder>() {
 
     inner class FrienRequestViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
 
@@ -27,6 +31,8 @@ class FriendRequestAdapter(var itemList : List<FriendRequest>,var mContext : Con
         {
             displayName=current.senderId
             view.requestundobtn.visibility=View.INVISIBLE
+            view.requestacceptbtn.visibility=View.VISIBLE
+            view.requestrejectbtn.visibility=View.VISIBLE
         }
         else
         {
@@ -36,6 +42,17 @@ class FriendRequestAdapter(var itemList : List<FriendRequest>,var mContext : Con
             view.requestundobtn.visibility=View.VISIBLE
         }
         view.requestDisplaytxt.text = displayName
+
+        view.requestundobtn.setOnClickListener{
+            itemViewModel.undoRequest(current.id)
+        }
+        view.requestacceptbtn.setOnClickListener{
+            itemViewModel.acceptRequest(current.id)
+        }
+        view.requestrejectbtn.setOnClickListener{
+            itemViewModel.rejectRequest(current.id)
+        }
+
 
     }
 

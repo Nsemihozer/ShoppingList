@@ -1,5 +1,6 @@
 package com.cotyoragames.shoppinglist.ui.user.friends
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,8 @@ class AddFriendsViewModel : ViewModel() {
     val users : LiveData<List<Users>>
         get() = _users
 
+    private val _sendedrequestList:MutableList<FriendRequest> = mutableListOf()
+    private val _receivedrequestList:MutableList<FriendRequest> = mutableListOf()
     private val _sendedRequests = MutableLiveData<List<FriendRequest>>()
     private val _receivedRequests = MutableLiveData<List<FriendRequest>>()
     val requests : LiveData<List<FriendRequest>>
@@ -55,16 +58,15 @@ class AddFriendsViewModel : ViewModel() {
         getReceivedRequests()
         _status.postValue(0) //0 clear 1 sending 2 success 3 fail
     }
-
     fun sendRequest(userId:String) {
         val docData = hashMapOf(
             "senderId" to auth.currentUser!!.uid,
             "receiverId" to userId,
-            "status" to 0 // waiting
+            "status" to 0 // waiting //1 accepted // rejected
         )
         db.collection("friendrequest").add(docData).addOnSuccessListener {
             getSendedRequests()
-           setStatus(2)
+            setStatus(2)
         }.addOnFailureListener {
             setStatus(3)
         }
@@ -90,30 +92,58 @@ class AddFriendsViewModel : ViewModel() {
         }
     }
 
+
     private fun getSendedRequests()
     {
-        val sendedrequestList:MutableList<FriendRequest> = mutableListOf()
-        db.collection("friendrequest").whereEqualTo("senderId",auth.currentUser!!.uid).get().addOnSuccessListener { docs->
+        _sendedrequestList.clear()
+        db.collection("friendrequest").whereEqualTo("senderId",auth.currentUser!!.uid).whereEqualTo("status",0).get().addOnSuccessListener { docs->
             for (document in docs){
-                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,
+                val newRequest = FriendRequest(document.id, document["senderId"] as String, document["receiverId"] as String  ,
                     (document["status"] as Long).toInt()
                 )
-                sendedrequestList.add(newRequest)
+                _sendedrequestList.add(newRequest)
             }
-            _sendedRequests.postValue(sendedrequestList)
+            _sendedRequests.postValue(_sendedrequestList)
         }
     }
     private fun getReceivedRequests()
     {
-        val receivedrequestList:MutableList<FriendRequest> = mutableListOf()
-        db.collection("friendrequest").whereEqualTo("receiverId",auth.currentUser!!.uid).get().addOnSuccessListener { docs->
+        _receivedrequestList.clear()
+        db.collection("friendrequest").whereEqualTo("receiverId",auth.currentUser!!.uid).whereEqualTo("status",0).get().addOnSuccessListener { docs->
             for (document in docs){
-                val newRequest = FriendRequest(document["senderId"] as String, document["receiverId"] as String  ,
+                val newRequest = FriendRequest(document.id,document["senderId"] as String, document["receiverId"] as String  ,
                     (document["status"] as Long).toInt()
                 )
-                receivedrequestList.add(newRequest)
+                _receivedrequestList.add(newRequest)
             }
-            _receivedRequests.postValue(receivedrequestList)
+            _receivedRequests.postValue(_receivedrequestList)
         }
+    }
+
+    fun undoRequest(id:String)
+    {
+        Firebase.firestore.collection("friendrequest").document(id).delete().addOnSuccessListener {
+            _sendedrequestList.remove(_sendedrequestList.find { it.id==id })
+            _sendedRequests.postValue(_sendedrequestList)
+        }
+            .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+    }
+
+    fun rejectRequest(id:String)
+    {
+        Firebase.firestore.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
+            _receivedrequestList.remove(_receivedrequestList.find { it.id==id })
+            _receivedRequests.postValue(_receivedrequestList)
+        }
+            .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+    }
+    fun acceptRequest(id:String)
+    {
+        Firebase.firestore.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
+            _receivedrequestList.remove(_receivedrequestList.find { it.id==id })
+            _receivedRequests.postValue(_receivedrequestList)
+
+        }
+            .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
     }
 }

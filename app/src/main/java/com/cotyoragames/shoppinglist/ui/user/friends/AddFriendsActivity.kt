@@ -27,7 +27,7 @@ class AddFriendsActivity : AppCompatActivity() {
         val userAdapter =
             AutoCompleteFriendAdapter(this, R.layout.friend_item, listOf())
 
-        val requestAdapter=FriendRequestAdapter(listOf(),this,Firebase.auth.currentUser!!.uid)
+        val requestAdapter=FriendRequestAdapter(listOf(),this,Firebase.auth.currentUser!!.uid,viewmodel)
 
         viewmodel.requests.observe(this, Observer {
             requestAdapter.itemList=it
