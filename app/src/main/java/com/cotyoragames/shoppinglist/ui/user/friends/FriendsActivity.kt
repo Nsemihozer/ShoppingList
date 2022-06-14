@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.other.FriendsListAdapter
 import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
@@ -29,6 +30,9 @@ class FriendsActivity : AppCompatActivity() {
             adapter.items=it
             adapter.notifyDataSetChanged()
         })
+
+        friendsrw.layoutManager=LinearLayoutManager(this)
+        friendsrw.adapter=adapter
 
         friendbottomnav.setOnNavigationItemSelectedListener {
             when(it.itemId)

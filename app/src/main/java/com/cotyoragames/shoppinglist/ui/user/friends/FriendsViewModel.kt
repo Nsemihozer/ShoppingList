@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 class FriendsViewModel : ViewModel() {
     val db = Firebase.firestore
@@ -16,17 +17,35 @@ class FriendsViewModel : ViewModel() {
     val users : LiveData<List<Users>>
         get() = _friends
 
+    private val _friendList: MutableList<String> =mutableListOf()
+    private val _userList: MutableList<Users> =mutableListOf()
     init {
         getFriends()
     }
     private fun getFriends(){
         val query = db.collection("users").whereEqualTo("uid",auth.currentUser!!.uid)
 
-        query.get().addOnSuccessListener { docs->
-            val doc = docs.documents[0]
-             _friends.postValue(doc["friends"] as List<Users>)
-        }.addOnFailureListener { ex->
+        try {
+            query.get().addOnSuccessListener { docs->
+                val userdoc = docs.documents[0]
+                _friendList.addAll(userdoc["friends"] as List<String>)
+                db.collection("users").whereIn("uid",_friendList).get().addOnSuccessListener { snap->
+                    for (doc in snap.documents)
+                    {
+                        val newUser = Users(doc["uid"] as String,
+                            doc["displayName"] as String,doc["email"] as String ,doc["photoUrl"] as String)
+                        _userList.add(newUser)
+                    }
+                    _friends.postValue(_userList)
+                }
+            }.addOnFailureListener { ex->
 
             }
+        }
+        catch (ex:Exception)
+        {
+            var x=""
+        }
+
     }
 }

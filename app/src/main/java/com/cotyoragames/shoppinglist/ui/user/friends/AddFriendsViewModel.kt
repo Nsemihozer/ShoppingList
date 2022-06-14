@@ -122,7 +122,7 @@ class AddFriendsViewModel : ViewModel() {
 
     fun undoRequest(id:String)
     {
-        Firebase.firestore.collection("friendrequest").document(id).delete().addOnSuccessListener {
+        db.collection("friendrequest").document(id).delete().addOnSuccessListener {
             _sendedrequestList.remove(_sendedrequestList.find { it.id==id })
             _sendedRequests.postValue(_sendedrequestList)
         }
@@ -131,19 +131,32 @@ class AddFriendsViewModel : ViewModel() {
 
     fun rejectRequest(id:String)
     {
-        Firebase.firestore.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
-            _receivedrequestList.remove(_receivedrequestList.find { it.id==id })
+        val req=_receivedrequestList.find { it.id==id }
+        db.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
+            _receivedrequestList.remove(req)
             _receivedRequests.postValue(_receivedrequestList)
         }
             .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
     }
     fun acceptRequest(id:String)
     {
-        Firebase.firestore.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
-            _receivedrequestList.remove(_receivedrequestList.find { it.id==id })
+        val req=_receivedrequestList.find { it.id==id }!!
+        db.collection("friendrequest").document(id).update("status",2).addOnSuccessListener {
+            _receivedrequestList.remove(req)
             _receivedRequests.postValue(_receivedrequestList)
-
         }
             .addOnFailureListener { e -> Log.w("TAG", "Error deleting document", e) }
+        db.collection("users").whereEqualTo("uid",req.senderId).get().addOnSuccessListener { docs->
+            val doc = docs.documents[0]
+            val friends:MutableList<String> = doc["friends"] as MutableList<String>
+            friends.add(req.receiverId)
+            db.collection("users").document(doc.id).update("friends",friends)
+        }
+        db.collection("users").whereEqualTo("uid", req.receiverId).get().addOnSuccessListener { docs->
+            val doc = docs.documents[0]
+            val friends:MutableList<String> = doc["friends"] as MutableList<String>
+            friends.add(req.senderId)
+            db.collection("users").document(doc.id).update("friends",friends)
+        }
     }
 }
