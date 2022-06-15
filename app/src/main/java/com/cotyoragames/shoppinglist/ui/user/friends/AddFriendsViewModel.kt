@@ -1,18 +1,16 @@
 package com.cotyoragames.shoppinglist.ui.user.friends
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.cotyoragames.shoppinglist.data.db.entities.FriendRequest
 import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 
-class AddFriendsViewModel : ViewModel() {
+class AddFriendsViewModel(val friends:List<String>) : ViewModel() {
     val db = Firebase.firestore
     val auth = Firebase.auth
     private val _users = MutableLiveData<List<Users>>()
@@ -53,10 +51,15 @@ class AddFriendsViewModel : ViewModel() {
     val status : LiveData<Int>
     get() = _status
     init {
-        getFriends()
-        getSendedRequests()
-        getReceivedRequests()
         _status.postValue(0) //0 clear 1 sending 2 success 3 fail
+        viewModelScope.launch{
+            getSendedRequests()
+            getReceivedRequests()
+            delay(3000)
+            getUsers()
+        }
+
+
     }
     fun sendRequest(userId:String) {
         val docData = hashMapOf(
@@ -65,7 +68,7 @@ class AddFriendsViewModel : ViewModel() {
             "status" to 0 // waiting //1 accepted // rejected
         )
         db.collection("friendrequest").add(docData).addOnSuccessListener {
-            getSendedRequests()
+            viewModelScope.launch { getSendedRequests() }
             setStatus(2)
         }.addOnFailureListener {
             setStatus(3)
@@ -77,14 +80,19 @@ class AddFriendsViewModel : ViewModel() {
         _status.postValue(status)
     }
 
-    private fun getFriends(){
+    private fun getUsers(){
         val userList:MutableList<Users> = mutableListOf()
         db.collection("users")
         .get().addOnSuccessListener { docs->
                 for (document in docs){
-                    val newUser = Users(document["uid"] as String, document["displayName"] as String  ,document["email"] as String ,
-                        document["photoUrl"] as String)
-                    userList.add(newUser)
+                    val uid : String=document["uid"] as String
+                    if (_sendedrequestList.find { it.receiverId == uid } == null && _receivedrequestList.find { it.senderId == uid} == null
+                        && !friends.contains(uid) && !uid.equals(auth.currentUser!!.uid)) {
+                        val newUser = Users(document["uid"] as String, document["displayName"] as String  ,document["email"] as String ,
+                            document["photoUrl"] as String)
+                        userList.add(newUser)
+                    }
+
                 }
                 _users.postValue(userList)
         }.addOnFailureListener { ex->
@@ -93,8 +101,7 @@ class AddFriendsViewModel : ViewModel() {
     }
 
 
-    private fun getSendedRequests()
-    {
+    private fun getSendedRequests() = CoroutineScope(Dispatchers.IO).launch{
         _sendedrequestList.clear()
         db.collection("friendrequest").whereEqualTo("senderId",auth.currentUser!!.uid).whereEqualTo("status",0).get().addOnSuccessListener { docs->
             for (document in docs){
@@ -106,17 +113,19 @@ class AddFriendsViewModel : ViewModel() {
             _sendedRequests.postValue(_sendedrequestList)
         }
     }
-    private fun getReceivedRequests()
-    {
+    private fun getReceivedRequests() = CoroutineScope(Dispatchers.IO).launch {
         _receivedrequestList.clear()
-        db.collection("friendrequest").whereEqualTo("receiverId",auth.currentUser!!.uid).whereEqualTo("status",0).get().addOnSuccessListener { docs->
-            for (document in docs){
-                val newRequest = FriendRequest(document.id,document["senderId"] as String, document["receiverId"] as String  ,
+        db.collection("friendrequest").whereEqualTo("receiverId", auth.currentUser!!.uid)
+            .whereEqualTo("status", 0).get().addOnSuccessListener { docs ->
+            for (document in docs) {
+                val newRequest = FriendRequest(
+                    document.id, document["senderId"] as String, document["receiverId"] as String,
                     (document["status"] as Long).toInt()
                 )
                 _receivedrequestList.add(newRequest)
             }
             _receivedRequests.postValue(_receivedrequestList)
+
         }
     }
 

@@ -17,12 +17,12 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_friends.*
 
 class FriendsActivity : AppCompatActivity() {
+    private lateinit var itemViewModel: FriendsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
 
-        val itemViewModel: FriendsViewModel =
-            ViewModelProvider(this).get(FriendsViewModel::class.java)
+        itemViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
 
         val adapter = FriendsListAdapter(listOf(),this)
 
@@ -59,7 +59,9 @@ class FriendsActivity : AppCompatActivity() {
             true
         }
         R.id.action_addfriend->{
-            startActivity(Intent(applicationContext, AddFriendsActivity::class.java))
+            startActivity(Intent(applicationContext, AddFriendsActivity::class.java).apply {
+               putExtra("friendlist",itemViewModel.friendList.toTypedArray())
+            })
             finishAffinity()
             true
         }

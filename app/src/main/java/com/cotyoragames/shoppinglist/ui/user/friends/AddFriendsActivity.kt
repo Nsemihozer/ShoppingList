@@ -20,8 +20,8 @@ class AddFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_friends)
-
-        val viewmodel:AddFriendsViewModel= ViewModelProvider(this).get(AddFriendsViewModel::class.java)
+        val friends = intent.getStringArrayExtra("friendlist")
+        val viewmodel:AddFriendsViewModel= ViewModelProvider(this,AddFriendsViewModelFactory(friends!!.toList())).get(AddFriendsViewModel::class.java)
 
 
         val userAdapter =

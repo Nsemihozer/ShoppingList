@@ -17,7 +17,7 @@ class FriendsViewModel : ViewModel() {
     val users : LiveData<List<Users>>
         get() = _friends
 
-    private val _friendList: MutableList<String> =mutableListOf()
+    val friendList: MutableList<String> =mutableListOf()
     private val _userList: MutableList<Users> =mutableListOf()
     init {
         getFriends()
@@ -28,8 +28,8 @@ class FriendsViewModel : ViewModel() {
         try {
             query.get().addOnSuccessListener { docs->
                 val userdoc = docs.documents[0]
-                _friendList.addAll(userdoc["friends"] as List<String>)
-                db.collection("users").whereIn("uid",_friendList).get().addOnSuccessListener { snap->
+                friendList.addAll(userdoc["friends"] as List<String>)
+                db.collection("users").whereIn("uid",friendList).get().addOnSuccessListener { snap->
                     for (doc in snap.documents)
                     {
                         val newUser = Users(doc["uid"] as String,
