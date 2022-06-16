@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList">
         <activity
+            android:name=".ui.shareshopping.ShareShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.user.friends.AddFriendsActivity"
             android:exported="true" />
         <activity

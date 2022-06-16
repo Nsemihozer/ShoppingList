@@ -65,21 +65,16 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
         }
 
         fab2.setOnClickListener {
-            var shoppingId=0
+
             val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
             val currentDateAndTime: String = simpleDateFormat.format(Date())
             val item = Shoppings(currentDateAndTime)
             itemViewModel.upsert(item)
-            CoroutineScope(Dispatchers.Main).launch {
-                withContext(Dispatchers.IO){
-                    shoppingId=itemViewModel.getLastAddedShopping().shoppingsId!!
-                }
-                val intent =Intent(this@ShoppingListActivity, ShoppingItemActivity::class.java).apply {
-                    putExtra("shoppingId",shoppingId)
-                }
-                startActivity(intent)
-                finishAffinity()
+            val intent =Intent(this, ShoppingItemActivity::class.java).apply {
+                putExtra("shopping",item)
             }
+            startActivity(intent)
+            finishAffinity()
 
         }
 

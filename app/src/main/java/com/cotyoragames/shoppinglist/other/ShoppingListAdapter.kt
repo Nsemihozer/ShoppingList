@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.Serializable
 
 class ShoppingListAdapter(
     var items: List<Shoppings>,
@@ -53,7 +54,7 @@ class ShoppingListAdapter(
         }
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ShoppingItemActivity::class.java).apply {
-                putExtra("shoppingId", current.shoppingsId)
+                putExtra("shopping", current)
             }
             context.startActivity(intent)
             (context as ShoppingListActivity).finishAffinity()

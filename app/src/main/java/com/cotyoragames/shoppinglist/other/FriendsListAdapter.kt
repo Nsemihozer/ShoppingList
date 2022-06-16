@@ -10,7 +10,7 @@ import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Users
 import kotlinx.android.synthetic.main.friend_item.view.*
 
-class FriendsListAdapter(var items:List<Users>, var context: Context) :
+class FriendsListAdapter(var items:List<Users>, var context: Context,var activity:Int) :
     RecyclerView.Adapter<FriendsListAdapter.FriendsViewHolder>() {
     inner class FriendsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
@@ -25,6 +25,12 @@ class FriendsListAdapter(var items:List<Users>, var context: Context) :
         Glide.with(context).load(current.photoUrl).into(view.friendsimg)
         view.usernametxt.text=current.displayName
         view.friendemailtxt.text=current.email
+        if (activity==1)
+        {
+            view.setOnClickListener {
+
+            }
+        }
     }
 
     override fun getItemCount(): Int {

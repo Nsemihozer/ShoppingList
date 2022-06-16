@@ -24,7 +24,7 @@ class FriendsActivity : AppCompatActivity() {
 
         itemViewModel = ViewModelProvider(this).get(FriendsViewModel::class.java)
 
-        val adapter = FriendsListAdapter(listOf(),this)
+        val adapter = FriendsListAdapter(listOf(),this,0)
 
         itemViewModel.users.observe(this, Observer{
             adapter.items=it
