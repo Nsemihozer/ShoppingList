@@ -1,8 +1,9 @@
-package com.cotyoragames.shoppinglist.ui.user.friends
+package com.cotyoragames.shoppinglist.ui.shareshopping
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -10,7 +11,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
-class FriendsViewModel : ViewModel() {
+class ShareShoppingListViewModel(private val shoppings: Shoppings) : ViewModel() {
+
     val db = Firebase.firestore
     private val auth: FirebaseAuth = Firebase.auth
     private val _friends = MutableLiveData<List<Users>>()
@@ -42,13 +44,15 @@ class FriendsViewModel : ViewModel() {
 
             }
         }
-        catch (ex:Exception)
+        catch (ex: Exception)
         {
             var x=""
         }
 
     }
 
+    fun shareShopping(user: Users)
+    {
 
-
+    }
 }
