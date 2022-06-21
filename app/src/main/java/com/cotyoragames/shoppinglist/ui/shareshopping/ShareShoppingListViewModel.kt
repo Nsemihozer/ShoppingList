@@ -1,8 +1,10 @@
 package com.cotyoragames.shoppinglist.ui.shareshopping
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cotyoragames.shoppinglist.data.db.entities.ShoppingItem
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.data.db.entities.Users
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +13,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
-class ShareShoppingListViewModel(private val shoppings: Shoppings) : ViewModel() {
+class ShareShoppingListViewModel(private val shopping: Shoppings,private val currItems:List<ShoppingItem>) : ViewModel() {
 
     val db = Firebase.firestore
     private val auth: FirebaseAuth = Firebase.auth
@@ -53,6 +55,14 @@ class ShareShoppingListViewModel(private val shoppings: Shoppings) : ViewModel()
 
     fun shareShopping(user: Users)
     {
+        val docData = hashMapOf(
+            "date" to shopping.date,
+            "items" to currItems,
+            "senderId" to auth.currentUser!!.uid,
+            "receiverId" to user.useruid
+        )
+        db.collection("shoppinglists").add(docData).addOnSuccessListener {
 
+        }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }
     }
 }

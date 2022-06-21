@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_share_shopping_list.*
 class ShareShoppingListActivity : AppCompatActivity() {
     private lateinit var itemViewModel: ShareShoppingListViewModel
     private lateinit var shopping:Shoppings
-    private lateinit var currItems:List<ShoppingItem>
+    private lateinit var currItems:List<List<ShoppingItem>>
     val db=Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +26,10 @@ class ShareShoppingListActivity : AppCompatActivity() {
 
         shopping= intent.getSerializableExtra("shopping") as Shoppings
         val args = intent.getBundleExtra("bundle")
-        currItems= args!!.getSerializable("items") as List<ShoppingItem>
-        itemViewModel = ViewModelProvider(this,ShareShoppingListViewModelFactory(shopping)).get(ShareShoppingListViewModel::class.java)
+        currItems= args!!.getSerializable("items") as List<List<ShoppingItem>>
+        itemViewModel = ViewModelProvider(this,ShareShoppingListViewModelFactory(shopping,currItems[0])).get(ShareShoppingListViewModel::class.java)
 
-        val adapter = ShareListAdapter(listOf(),this,)
+        val adapter = ShareListAdapter(listOf(),this,itemViewModel)
 
         itemViewModel.users.observe(this, Observer {
             adapter.items=it
@@ -41,12 +41,6 @@ class ShareShoppingListActivity : AppCompatActivity() {
 
 
 
-        val docData = hashMapOf(
-            "date" to shopping.date,
-            "items" to currItems,
-        )
-        /*db.collection("shoppinglists").add(docData).addOnSuccessListener {
 
-        }.addOnFailureListener {  e -> Log.w("FireStore", "Error writing document", e)  }*/
     }
 }
