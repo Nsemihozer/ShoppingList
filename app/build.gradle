@@ -84,5 +84,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
     implementation 'com.huawei.agconnect:agconnect-core:1.6.4.300'
+
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.1'
 }
 

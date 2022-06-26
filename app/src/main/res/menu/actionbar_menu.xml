@@ -12,4 +12,9 @@
         android:icon="@android:drawable/ic_input_add"
         android:title="Add Friend"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_insert"
+        android:icon="@drawable/ic_insert"
+        android:title="action_insert"
+        app:showAsAction="always" />
 </menu>

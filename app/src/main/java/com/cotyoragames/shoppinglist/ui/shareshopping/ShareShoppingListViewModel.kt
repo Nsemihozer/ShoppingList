@@ -59,7 +59,9 @@ class ShareShoppingListViewModel(private val shopping: Shoppings,private val cur
             "date" to shopping.date,
             "items" to currItems,
             "senderId" to auth.currentUser!!.uid,
-            "receiverId" to user.useruid
+            "receiverId" to user.useruid,
+            "senderName" to auth.currentUser!!.displayName,
+            "receiverName" to user.displayName
         )
         db.collection("shoppinglists").add(docData).addOnSuccessListener {
 

@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.insertshopping.InsertShoppingActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sharedlistrw"
+        android:layout_width="391dp"
+        android:layout_height="827dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

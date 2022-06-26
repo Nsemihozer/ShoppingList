@@ -49,6 +49,8 @@ class FriendsActivity : AppCompatActivity() {
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
+        val item = menu!!.findItem(R.id.action_insert)
+        item.isVisible=false
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
