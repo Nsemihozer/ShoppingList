@@ -10,15 +10,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.other.InsertShoppingListAdapter
 import com.cotyoragames.shoppinglist.other.SwipeGesture
+import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListViewModelFactory
 import kotlinx.android.synthetic.main.activity_insert_shopping.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class InsertShoppingActivity : AppCompatActivity() {
+class InsertShoppingActivity : AppCompatActivity(), KodeinAware {
+
+    override val kodein by kodein()
+    private val factoryItem: InsertShoppingViewModelFactory by instance()
     private lateinit var itemViewModel: InsertShoppingViewModel
     private lateinit var adapter: InsertShoppingListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insert_shopping)
-        itemViewModel= ViewModelProvider(this).get(InsertShoppingViewModel::class.java)
+        itemViewModel= ViewModelProvider(this,factoryItem).get(InsertShoppingViewModel::class.java)
         adapter= InsertShoppingListAdapter(listOf(),this,itemViewModel)
 
         val swipeGesture = object :SwipeGesture(this){

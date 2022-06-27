@@ -10,6 +10,9 @@ import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.SharedShopping
 import com.cotyoragames.shoppinglist.ui.insertshopping.InsertShoppingViewModel
 import kotlinx.android.synthetic.main.shared_item.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class InsertShoppingListAdapter(
     var items:List<SharedShopping>,
@@ -36,7 +39,10 @@ class InsertShoppingListAdapter(
 
     fun accept(adapterPosition: Int)
     {
-        viewModel.accept(items.get(adapterPosition).shareid)
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.accept(items.get(adapterPosition))
+        }
+
     }
 
 

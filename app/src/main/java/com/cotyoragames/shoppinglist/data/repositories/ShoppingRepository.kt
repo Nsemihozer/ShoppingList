@@ -24,11 +24,11 @@ class ShoppingRepository(
     fun getNotListedShoppingItems()=db.getShoppingDao().getNotListedShoppingItems()
 
     //----------------------------------------------------//
-    //-----------------Shopping Item Actions-------------//
+    //-----------------Shopping  Actions-------------//
 
     suspend fun deleteShopping(item: Shoppings)=db.getShoppingDao().deleteShopping(item)
 
-    suspend fun insertShopping(item:Shoppings)=db.getShoppingDao().upsertShopping(item)
+    suspend fun insertShopping(item:Shoppings) : Long = db.getShoppingDao().upsertShopping(item)
 
     fun getAllShoppings()=db.getShoppingDao().getAllShoppings()
 

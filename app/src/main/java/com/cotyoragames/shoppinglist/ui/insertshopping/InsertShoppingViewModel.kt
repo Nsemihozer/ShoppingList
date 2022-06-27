@@ -6,12 +6,18 @@ import androidx.lifecycle.ViewModel
 import com.cotyoragames.shoppinglist.data.db.entities.SharedShopping
 import com.cotyoragames.shoppinglist.data.db.entities.ShoppingItem
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
+import com.cotyoragames.shoppinglist.data.repositories.ShoppingRepository
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.app
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-class InsertShoppingViewModel() : ViewModel() {
+class InsertShoppingViewModel(private val repository: ShoppingRepository) : ViewModel() {
 
     private val db=Firebase.firestore
     private val auth=Firebase.auth
@@ -44,9 +50,21 @@ class InsertShoppingViewModel() : ViewModel() {
         }
     }
 
-    fun accept(shareid:String){
-        db.collection("shoppinglists").document(shareid).get().addOnSuccessListener { doc->
-            val items= doc["items"] as List<ShoppingItem>
+    suspend fun accept(shareditem:SharedShopping){
+        db.collection("shoppinglists").document(shareditem.shareid).get().addOnSuccessListener { doc->
+            val items= doc["items"] as List<HashMap<String,Any>>
+            CoroutineScope(Dispatchers.IO).launch {
+                val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                val currentDateAndTime: String = simpleDateFormat.format(Date())
+                val item = Shoppings(currentDateAndTime)
+                val id= repository.insertShopping(item)
+                for (shopitem in items)
+                {
+                    val newitem = ShoppingItem(shopitem["name"] as String,shopitem["amount"] as Double,shopitem["amountType"] as String)
+                    newitem.shoppingId=id.toInt()
+                    repository.upsert(newitem)
+                }
+            }
         }
     }
 }

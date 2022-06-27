@@ -1,6 +1,7 @@
 package com.cotyoragames.shoppinglist.ui.shoppinglist
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.data.repositories.ShoppingRepository
@@ -10,10 +11,7 @@ import kotlinx.coroutines.launch
 
 class ShoppingListViewModel(private val repository: ShoppingRepository) : ViewModel() {
 
-
-    fun upsert(item: Shoppings)= CoroutineScope(Dispatchers.Main).launch {
-        repository.insertShopping(item)
-    }
+    suspend fun upsert(item: Shoppings) = repository.insertShopping(item)
 
     fun getAllShoppingItems()= repository.getAllShoppings()
 

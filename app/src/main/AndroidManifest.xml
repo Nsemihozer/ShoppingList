@@ -14,10 +14,10 @@
         android:theme="@style/Theme.ShoppingList">
         <activity
             android:name=".ui.insertshopping.InsertShoppingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.shareshopping.ShareShoppingListActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.user.friends.AddFriendsActivity"
             android:exported="true" />

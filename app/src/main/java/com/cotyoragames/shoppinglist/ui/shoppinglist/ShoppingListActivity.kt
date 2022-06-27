@@ -28,6 +28,9 @@ import com.cotyoragames.shoppinglist.ui.user.friends.FriendsActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_shopping_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -76,12 +79,19 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
             val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
             val currentDateAndTime: String = simpleDateFormat.format(Date())
             val item = Shoppings(currentDateAndTime)
-            itemViewModel.upsert(item)
-            val intent =Intent(this, ShoppingItemActivity::class.java).apply {
-                putExtra("shopping",item)
+
+            CoroutineScope(Dispatchers.IO).launch{
+                val shoppingid= itemViewModel.upsert(item)
+                item.shoppingsId=shoppingid.toInt()
+                val intent =Intent(this@ShoppingListActivity, ShoppingItemActivity::class.java).apply {
+                    putExtra("shopping",item)
+                }
+                startActivity(intent)
+                finishAffinity()
             }
-            startActivity(intent)
-            finishAffinity()
+
+
+
 
         }
 
