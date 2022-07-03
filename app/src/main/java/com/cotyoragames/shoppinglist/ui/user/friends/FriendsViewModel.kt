@@ -19,9 +19,20 @@ class FriendsViewModel : ViewModel() {
 
     val friendList: MutableList<String> =mutableListOf()
     private val _userList: MutableList<Users> =mutableListOf()
+
+    private val _status = MutableLiveData<Int>()
+    val status : LiveData<Int>
+        get() = _status
+
     init {
+        _status.postValue(0) //0 loading 1 loaded
         getUsers()
     }
+    fun setStatus(status:Int)
+    {
+        _status.postValue(status)
+    }
+
     private fun getUsers(){
         val query = db.collection("users").whereEqualTo("uid",auth.currentUser!!.uid)
 

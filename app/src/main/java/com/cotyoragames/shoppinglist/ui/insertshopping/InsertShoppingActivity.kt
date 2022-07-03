@@ -1,5 +1,6 @@
 package com.cotyoragames.shoppinglist.ui.insertshopping
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.other.InsertShoppingListAdapter
 import com.cotyoragames.shoppinglist.other.SwipeGesture
+import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
 import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListViewModelFactory
 import kotlinx.android.synthetic.main.activity_insert_shopping.*
 import org.kodein.di.KodeinAware
@@ -50,5 +52,11 @@ class InsertShoppingActivity : AppCompatActivity(), KodeinAware {
         })
 
 
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,ShoppingListActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }

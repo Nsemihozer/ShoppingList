@@ -1,5 +1,6 @@
 package com.cotyoragames.shoppinglist.ui.shareshopping
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import com.cotyoragames.shoppinglist.data.db.entities.ShoppingItem
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
 import com.cotyoragames.shoppinglist.other.FriendsListAdapter
 import com.cotyoragames.shoppinglist.other.ShareListAdapter
+import com.cotyoragames.shoppinglist.ui.shoppinglist.ShoppingListActivity
 import com.cotyoragames.shoppinglist.ui.user.friends.FriendsViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -39,8 +41,11 @@ class ShareShoppingListActivity : AppCompatActivity() {
         shareuserrw.layoutManager=LinearLayoutManager(this)
         shareuserrw.adapter=adapter
 
+    }
 
-
-
+    override fun onBackPressed() {
+        val intent = Intent(this, ShoppingListActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }

@@ -58,8 +58,6 @@ class AddFriendsViewModel(val friends:List<String>) : ViewModel() {
             delay(3000)
             getUsers()
         }
-
-
     }
     fun sendRequest(userId:String) {
         val docData = hashMapOf(

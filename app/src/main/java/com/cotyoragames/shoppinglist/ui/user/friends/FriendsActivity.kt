@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,19 @@ class FriendsActivity : AppCompatActivity() {
 
         itemViewModel.users.observe(this, Observer{
             adapter.items=it
+            itemViewModel.setStatus(1)
             adapter.notifyDataSetChanged()
+        })
+
+        itemViewModel.status.observe(this, Observer {
+            if (it==1){
+                friendsrw.visibility= View.VISIBLE
+                friendspb.visibility=View.INVISIBLE
+            }
+            else{
+                friendsrw.visibility= View.INVISIBLE
+                friendspb.visibility=View.VISIBLE
+            }
         })
 
         friendsrw.layoutManager=LinearLayoutManager(this)

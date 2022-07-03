@@ -1,30 +1,24 @@
 package com.cotyoragames.shoppinglist.ui.shoppinglist
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.cotyoragames.shoppinglist.R
 import com.cotyoragames.shoppinglist.data.db.entities.Shoppings
-import com.cotyoragames.shoppinglist.other.InsertShoppingListAdapter
 import com.cotyoragames.shoppinglist.other.ShoppingListAdapter
 import com.cotyoragames.shoppinglist.ui.insertshopping.InsertShoppingActivity
 import com.cotyoragames.shoppinglist.ui.shoppingitemlist.ShoppingItemActivity
 import com.cotyoragames.shoppinglist.ui.user.LoginActivity
 import com.cotyoragames.shoppinglist.ui.user.friends.FriendsActivity
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_shopping_list.*
@@ -48,18 +42,51 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_list)
 
+        MobileAds.initialize(this) {}
+
+
+
         val itemViewModel: ShoppingListViewModel =
             ViewModelProvider(this, factoryItem).get(ShoppingListViewModel::class.java)
 
 
-        val adapter = ShoppingListAdapter(listOf(), itemViewModel,this)
+        val adapter = ShoppingListAdapter(mutableListOf(), itemViewModel,this)
         shoppinglist.layoutManager = LinearLayoutManager(this)
         shoppinglist.adapter = adapter
 
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-3940256099942544/2247696110")
+            .forNativeAd { ad : NativeAd ->
+                adapter.setNativeAd(ad)
+                adapter.items = currItems as MutableList<Shoppings?>
+                adapter.items.add(0,null)
+                adapter.notifyDataSetChanged()
+                itemViewModel.setStatus(1)
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    adapter.items = currItems as MutableList<Shoppings?>
+                    adapter.notifyDataSetChanged()
+                    itemViewModel.setStatus(1)
+                }
+            })
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
+
         itemViewModel.getAllShoppingItems().observe(this, Observer {
             currItems=it
-            adapter.items = currItems
-            adapter.notifyDataSetChanged()
+        })
+
+        itemViewModel.status.observe(this, Observer {
+            if (it==1)
+            {
+                shoppinglist.visibility= View.VISIBLE
+                shoppinglistpb.visibility= View.INVISIBLE
+            }
+            else
+            {
+                shoppinglist.visibility= View.INVISIBLE
+                shoppinglistpb.visibility= View.VISIBLE
+            }
         })
         bottomNavigationView.selectedItemId=R.id.list_item_menu
         bottomNavigationView.setOnNavigationItemSelectedListener {
@@ -89,13 +116,24 @@ class ShoppingListActivity : AppCompatActivity() , KodeinAware {
                 startActivity(intent)
                 finishAffinity()
             }
-
-
-
-
         }
 
     }
+
+    private fun addNullValueInsideArray(data: List<Int>) : List<Int?>
+    {
+        val newData= arrayListOf<Int?>()
+        for (i in data.indices)
+        {
+            if(i % 4 == 0)
+            {
+                newData.add(null)
+            }
+            newData.add(data[i])
+        }
+        return newData
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
         val item = menu!!.findItem(R.id.action_addfriend)

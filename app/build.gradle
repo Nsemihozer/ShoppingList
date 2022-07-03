@@ -86,5 +86,8 @@ dependencies {
     implementation 'com.huawei.agconnect:agconnect-core:1.6.4.300'
 
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.1'
+
+    implementation 'com.google.android.gms:play-services-ads:21.0.0'
+
 }
 
