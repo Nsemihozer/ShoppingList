@@ -23,7 +23,11 @@ class FriendsListAdapter(var items:List<Users>, var context: Context) :
     override fun onBindViewHolder(holder: FriendsViewHolder, position: Int) {
         var view=holder.itemView
         var current=items.get(position)
-        Glide.with(context).load(current.photoUrl).into(view.friendsimg)
+        if (!current.photoUrl.equals(""))
+        {
+            Glide.with(context).load(current.photoUrl).into(view.friendsimg)
+        }
+
         view.usernametxt.text=current.displayName
         view.friendemailtxt.text=current.email
 
