@@ -11,7 +11,7 @@ interface ShoppingDao {
     //-----------------Shopping Item Actions-------------//
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(item: ShoppingItem)
+    suspend fun upsert(item: ShoppingItem):Long
 
     @Delete
     suspend fun delete(item: ShoppingItem)
